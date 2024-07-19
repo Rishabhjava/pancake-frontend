@@ -18,17 +18,15 @@ import { ClaimZksyncAirdropModal } from 'components/ClaimZksyncAirdropModal'
 import { useUserWhiteListData, useZksyncAirDropData } from 'components/ClaimZksyncAirdropModal/hooks'
 import { ASSET_CDN } from 'config/constants/endpoints'
 import { useAtom } from 'jotai'
-import { atomWithStorage } from 'jotai/utils'
 import Image from 'next/legacy/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useAccount } from 'wagmi'
+import atomWithStorageWithErrorCatch from 'utils/atomWithStorageWithErrorCatch'
 
-const zksyncAutoPopup = atomWithStorage<{ [account: string]: boolean }>(
+const zksyncAutoPopup = atomWithStorageWithErrorCatch<{ [account: string]: boolean }>(
   'pcs:zksync-airdrop-auto-popup-v2',
   {},
-  undefined,
-  { unstable_getOnInit: true },
 )
 
 const useAutoPopup = (): [boolean, (value: boolean) => void] => {
