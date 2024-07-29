@@ -310,6 +310,7 @@ export function useGasPrice(chainIdOverride?: number): bigint | undefined {
     enabled: Boolean(signer && chainId === ChainId.BSC && userGas === GAS_PRICE_GWEI.rpcDefault),
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
   })
   if (chainId === ChainId.BSC) {
     return userGas === GAS_PRICE_GWEI.rpcDefault ? bscProviderGasPrice : BigInt(userGas ?? GAS_PRICE_GWEI.default)

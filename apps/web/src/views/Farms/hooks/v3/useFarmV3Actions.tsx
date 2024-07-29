@@ -14,6 +14,7 @@ import { Address, hexToBigInt } from 'viem'
 import { useAccount, useSendTransaction, useWalletClient } from 'wagmi'
 import { useIsSmartContract } from 'hooks/useIsSmartContract'
 import { BOOSTED_FARM_V3_GAS_LIMIT } from 'config'
+import { useGasPrice } from 'state/user/hooks'
 
 interface FarmV3ActionContainerChildrenProps {
   attemptingTxn: boolean
@@ -30,6 +31,7 @@ const useFarmV3Actions = ({
   onDone?: () => void
 }): FarmV3ActionContainerChildrenProps => {
   const { t } = useTranslation()
+  const gasPrice = useGasPrice()
   const { toastSuccess } = useToast()
   const { address: account } = useAccount()
   const { data: signer } = useWalletClient()
@@ -64,6 +66,7 @@ const useFarmV3Actions = ({
           const newTxn = {
             ...txn,
             gas: calculateGasMargin(estimate),
+            gasPrice,
           }
 
           return sendTransactionAsync(newTxn)
@@ -102,6 +105,7 @@ const useFarmV3Actions = ({
     toastSuccess,
     tokenId,
     onDone,
+    gasPrice,
   ])
 
   const onStake = useCallback(async () => {
@@ -126,6 +130,7 @@ const useFarmV3Actions = ({
         const newTxn = {
           ...txn,
           gas: calculateGasMargin(estimate),
+          gasPrice,
         }
 
         return sendTransactionAsync(newTxn)
@@ -178,6 +183,7 @@ const useFarmV3Actions = ({
             account,
             chain: signer?.chain,
             gas: calculateGasMargin(estimate),
+            gasPrice,
           }
 
           return sendTransactionAsync(newTxn)
@@ -217,6 +223,7 @@ const useFarmV3Actions = ({
 export function useFarmsV3BatchHarvest() {
   const { t } = useTranslation()
   const { data: signer } = useWalletClient()
+  const gasPrice = useGasPrice()
   const { toastSuccess } = useToast()
   const { address: account } = useAccount()
   const { sendTransactionAsync } = useSendTransaction()
@@ -245,6 +252,7 @@ export function useFarmsV3BatchHarvest() {
           const newTxn = {
             ...txn,
             gas: calculateGasMargin(estimate),
+            gasPrice,
           }
 
           return sendTransactionAsync(newTxn)
