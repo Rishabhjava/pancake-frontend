@@ -1,5 +1,11 @@
 # @pancakeswap/tokens
 
+## 0.6.24
+
+### Patch Changes
+
+- c6e9e02: Added WSI token on bsc
+
 ## 0.6.23
 
 ### Patch Changes
